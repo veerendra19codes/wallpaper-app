@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
-export const DownloadPicture = () => {
+export const DownloadPicture = ({ onClose }) => {
     // ref
     const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -15,9 +15,12 @@ export const DownloadPicture = () => {
     return (
         <View style={styles.container}>
             <BottomSheet
-                snapPoints={["90%"]}
+                snapPoints={["99%", "50%"]}
                 ref={bottomSheetRef}
                 onChange={handleSheetChanges}
+                enablePanDownToClose={true}
+                onClose={onClose}
+                handleIndicatorStyle={{ height: 0 }}
             >
                 <BottomSheetView style={styles.contentContainer}>
                     <Text>Awesome 🎉</Text>

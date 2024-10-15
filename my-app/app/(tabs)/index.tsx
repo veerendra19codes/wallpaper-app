@@ -1,32 +1,21 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Text, View } from 'react-native';
+// https://ideogram.ai/assets/progressive-image/balanced/response/SuVYPOauSE2GESq0tyYFbQ
 
-const Tab = createMaterialTopTabNavigator();
 
-export default function Foryou() {
-    return (
-        <Tab.Navigator>
-            <Tab.Screen name="suggested" component={SuggestedScreen} />
-            <Tab.Screen name="liked" component={LikedScreen} />
-            <Tab.Screen name="library" component={LibraryScreen} />
-        </Tab.Navigator>
-    );
-}
+import { useState } from "react";
+import { Button, Image, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { DownloadPicture } from "../../components/BottomSheet";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
 
-function SuggestedScreen() {
-    return <View>
-        <Text>Hi from Suggested</Text>
-    </View>
-}
+export default function Explore() {
+    const [pictureOpen, setPictureOpen] = useState(false);
 
-function LikedScreen() {
-    return <View>
-        <Text>Hi from Liked</Text>
-    </View>
-}
+    return <SafeAreaView style={{ flex: 1 }}>
+        <ParallaxScrollView headerBackgroundColor={{ dark: "black", light: "white" }} headerImage={<Image style={{ flex: 1 }} source={{
+            uri: "https://ideogram.ai/assets/progressive-image/balanced/response/SuVYPOauSE2GESq0tyYFbQ"
+        }} />} >
 
-function LibraryScreen() {
-    return <View>
-        <Text>Hi from Library</Text>
-    </View>
+            <Text style={{ color: "white" }}>Explore page</Text>
+        </ParallaxScrollView>
+    </SafeAreaView>
 }
