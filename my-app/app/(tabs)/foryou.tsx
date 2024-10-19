@@ -1,4 +1,8 @@
 import SplitView from '@/components/SplitView';
+import { ThemedSafeAreaView } from '@/components/ThemedSafeAreaView';
+import { ThemedView } from '@/components/ThemedView';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
 import useWallpapers, { useLibraryWallpapers, useLikedWallpapers, useSuggestedWallpapers } from '@/hooks/useWallpapers';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
@@ -6,35 +10,40 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 const Tab = createMaterialTopTabNavigator();
 
 export default function Foryou() {
-    return (
+    const theme = useColorScheme() ?? "light";
 
-        <Tab.Navigator>
-            <Tab.Screen name="suggested" component={SuggestedScreen} />
-            <Tab.Screen name="liked" component={LikedScreen} />
-            <Tab.Screen name="library" component={LibraryScreen} />
-        </Tab.Navigator>
+    return (
+        <ThemedSafeAreaView style={styles.container}>
+            <Tab.Navigator style={{
+                flex: 1,
+            }} >
+                <Tab.Screen name="suggested" component={SuggestedScreen} />
+                <Tab.Screen name="liked" component={LikedScreen} />
+                <Tab.Screen name="library" component={LibraryScreen} />
+            </Tab.Navigator>
+        </ThemedSafeAreaView>
     );
 }
 
 function SuggestedScreen() {
     const wallpapers = useSuggestedWallpapers();
-    return <SafeAreaView style={styles.container}>
+    return <ThemedView style={styles.container}>
         <SplitView wallpapers={wallpapers} />
-    </SafeAreaView>
+    </ThemedView>
 }
 
 function LikedScreen() {
     const wallpapers = useLikedWallpapers();
-    return <SafeAreaView style={styles.container}>
+    return <ThemedView style={styles.container}>
         <SplitView wallpapers={wallpapers} />
-    </SafeAreaView>
+    </ThemedView>
 }
 
 function LibraryScreen() {
     const wallpapers = useLibraryWallpapers();
-    return <SafeAreaView style={styles.container}>
+    return <ThemedView style={styles.container}>
         <SplitView wallpapers={wallpapers} />
-    </SafeAreaView>
+    </ThemedView>
 }
 
 const styles = StyleSheet.create({
