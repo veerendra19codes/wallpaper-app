@@ -8,6 +8,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Colors } from '@/constants/Colors';
 
+const theme = useColorScheme() ?? 'light';
+
 export const DownloadPicture = ({ onClose, wallpaper }: {
     onClose: any;
     wallpaper: Wallpaper;
@@ -37,35 +39,36 @@ export const DownloadPicture = ({ onClose, wallpaper }: {
             }}
         >
             <BottomSheetView style={styles.contentContainer}>
-                <Image source={{ uri: wallpaper.url }} style={styles.image} />
+                <ThemedView style={{ flex: 1 }}>
+                    <Image source={{ uri: wallpaper.url }} style={styles.image} />
 
-                <View style={styles.topbar}>
-                    <Ionicons
-                        onPress={onClose}
-                        name={'close'}
-                        size={24}
-                        color={theme === 'light' ? Colors.light.icon : Colors.dark.text}
-                    />
-                    <View style={styles.topbarInner}>
+                    <View style={styles.topbar}>
                         <Ionicons
-                            name={'heart'}
+                            onPress={onClose}
+                            name={'close'}
                             size={24}
                             color={theme === 'light' ? Colors.light.icon : Colors.dark.text}
                         />
-                        <Ionicons
-                            name={'share'}
-                            size={24}
-                            color={theme === 'light' ? Colors.light.icon : Colors.dark.text}
-                            style={{ paddingLeft: 4 }}
-                        />
+                        <View style={styles.topbarInner}>
+                            <Ionicons
+                                name={'heart'}
+                                size={24}
+                                color={theme === 'light' ? Colors.light.icon : Colors.dark.text}
+                            />
+                            <Ionicons
+                                name={'share'}
+                                size={24}
+                                color={theme === 'light' ? Colors.light.icon : Colors.dark.text}
+                                style={{ paddingLeft: 4 }}
+                            />
+                        </View>
                     </View>
-                </View>
 
-                <ThemedView style={styles.textContainer}>
-                    <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
-                </ThemedView>
+                    <ThemedView style={styles.textContainer}>
+                        <ThemedText style={styles.text}>{wallpaper.name}</ThemedText>
+                    </ThemedView>
 
-                <ThemedView style={styles.downloadButtonContainer}>
+                    {/* <ThemedView style={styles.downloadButtonContainer}> */}
                     <DownloadButton />
                 </ThemedView>
             </BottomSheetView>
@@ -79,15 +82,19 @@ function DownloadButton() {
     const theme = useColorScheme() ?? 'light';
 
     return <Pressable>
-        <ThemedText style={styles.downloadButton} >
+        <ThemedView style={styles.downloadButton} >
             <Ionicons
                 name={'download'}
                 size={24}
                 color={theme === 'light' ? Colors.light.icon : Colors.dark.icon}
                 style={{ paddingRight: 4 }}
             />
-            Download
-        </ThemedText>
+            <Text style={{
+                color: "white",
+                fontSize: 20,
+                fontWeight: "600",
+            }}>Download</Text>
+        </ThemedView>
     </Pressable>
 }
 
@@ -97,7 +104,6 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        backgroundColor: "transparent",
     },
     image: {
         height: 500,
@@ -105,7 +111,6 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         width: "100%",
-        backgroundColor: "transparent"
     },
     text: {
         padding: 10,
@@ -113,30 +118,19 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 30,
         fontWeight: "600",
-        color: "black"
     },
-    downloadButtonContainer: {
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "transparent"
-    },
+
     downloadButton: {
-        width: "80%",
         backgroundColor: "black",
-        color: "white",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 10,
         padding: 20,
-        paddingHorizontal: 40,
+        marginHorizontal: 40,
+        marginVertical: 20,
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "row",
         borderRadius: 15,
-        margin: 10,
-        marginBottom: 30,
-        fontWeight: 500,
-        fontSize: 20
+        borderWidth: 1,
+        borderColor: theme === 'light' ? Colors.light.icon : Colors.dark.icon,
     },
     topbar: {
         position: "absolute",
