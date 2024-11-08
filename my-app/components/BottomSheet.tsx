@@ -28,7 +28,7 @@ export const DownloadPicture = ({ onClose, wallpaper }: {
     return (
         // <View style={styles.container}>
         <BottomSheet
-            snapPoints={["90%"]}
+            snapPoints={["95%"]}
             ref={bottomSheetRef}
             onChange={handleSheetChanges}
             enablePanDownToClose={true}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     image: {
-        height: 500,
+        height: 450,
         borderRadius: 15
     },
     textContainer: {
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     text: {
         padding: 10,
-        marginTop: 20,
+        marginTop: 45,
         textAlign: "center",
         fontSize: 30,
         fontWeight: "600",

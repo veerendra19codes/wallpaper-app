@@ -20,6 +20,10 @@ export default function Foryou() {
                 tabBarStyle: {
                     backgroundColor: Colors[theme].background
                 },
+                tabBarIndicatorStyle: {
+                    backgroundColor: Colors[theme].indicator,
+                    height: 5
+                }
             }} >
                 <Tab.Screen name="suggested" component={SuggestedScreen} />
                 <Tab.Screen name="liked" component={LikedScreen} />

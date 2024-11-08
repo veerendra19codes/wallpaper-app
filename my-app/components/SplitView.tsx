@@ -5,8 +5,9 @@ import ImageCard from "./ImageCard";
 import { useState } from "react";
 import { DownloadPicture } from "./BottomSheet";
 
-export default function SplitView({ wallpapers }: {
-    wallpapers: Wallpaper[]
+export default function SplitView({ wallpapers, onScroll }: {
+    wallpapers: Wallpaper[],
+    onScroll?: (yOffset: number) => void,
 }) {
 
     const [selectedWallpaper, setSelectedWallpaper] = useState<null | Wallpaper>(null);
@@ -14,6 +15,8 @@ export default function SplitView({ wallpapers }: {
     return <>
         <FlatList onScroll={(e) => {
             let yOffset = e.nativeEvent.contentOffset.y / 1;
+            onScroll?.(yOffset);
+            // console.log("yOffset in splitviews flatlist: ", yOffset);
         }} data={wallpapers.filter((_, index) => index % 2 === 0).map((_, index) => [wallpapers[index], wallpapers[index + 1]])}
             renderItem={({ item: [first, second] }) =>
                 <ThemedView style={styles.container}>

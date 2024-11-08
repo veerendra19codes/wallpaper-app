@@ -7,7 +7,7 @@ export default function TabLayout() {
     const theme = useColorScheme() ?? "light";
     return (
         <Tabs screenOptions={{
-            tabBarActiveTintColor: 'blue', headerShown: false, tabBarStyle: {
+            tabBarActiveTintColor: Colors[theme].tint, headerShown: false, tabBarStyle: {
                 backgroundColor: Colors[theme].background
             }
         }}>
@@ -22,14 +22,14 @@ export default function TabLayout() {
                 name="index"
                 options={{
                     title: 'Explore',
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="feed" color={color} />,
                 }}
             />
             <Tabs.Screen
                 name="account"
                 options={{
                     title: 'Account',
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
                 }}
             />
         </Tabs>

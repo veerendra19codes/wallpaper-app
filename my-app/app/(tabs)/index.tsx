@@ -1,46 +1,61 @@
 import { useState } from "react";
-import { Button, Dimensions, FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DownloadPicture } from "../../components/BottomSheet";
 import useWallpapers, { Wallpaper } from "@/hooks/useWallpapers";
-import ImageCard from "@/components/ImageCard";
-import { ThemedView } from "@/components/ThemedView";
 import SplitView from "@/components/SplitView";
 import Carousel from 'react-native-reanimated-carousel';
+import { useCarousel } from "@/hooks/useCarousel";
+import { LinearGradient } from "expo-linear-gradient"
+import { ThemedText } from "@/components/ThemedText";
+import { AnimatedView } from "react-native-reanimated/lib/typescript/reanimated2/component/View";
+import Animated from "react-native-reanimated";
+
+const TOPBAR_HEIGHT = 250;
 
 export default function Explore() {
     const [pictureOpen, setPictureOpen] = useState(false);
     const [selectedWallpaper, setSelectedWallpaper] = useState<null | Wallpaper>(null);
     const wallpapers = useWallpapers();
     const width = Dimensions.get('window').width;
+    const [yOffset, setScrollY] = useState(0);
+    const carouselItems = useCarousel();
 
     return <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ height: 300 }}>
+        <Animated.View style={{ height: TOPBAR_HEIGHT - yOffset }}>
             <Carousel
                 loop
                 width={width}
-                height={300}
-                autoPlay={true}
-                data={[...new Array(6).keys()]}
+                // height={300 - yOffset}
+                // autoPlay={true}
+                data={carouselItems}
                 scrollAnimationDuration={1000}
                 onSnapToItem={(index) => console.log('current index:', index)}
                 renderItem={({ index }) => (
-                    <View
-                        style={{
-                            flex: 1,
-                            borderWidth: 1,
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Text style={{ textAlign: 'center', fontSize: 30 }}>
-                            {index}
-                        </Text>
-                    </View>
+                    <>
+                        <View
+                            style={{
+                                flex: 1,
+                                borderWidth: 1,
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <Image source={{ uri: carouselItems[index].image }} style={{ height: TOPBAR_HEIGHT }} />
+                        </View>
+                        <LinearGradient colors={["transparent", "black"]} style={{ flex: 1, position: "absolute", height: TOPBAR_HEIGHT / 2, zIndex: 10, width: "100%", bottom: 0 }}>
+                            <Text style={{ color: "white", textAlign: "center", fontWeight: "500", fontSize: 30, paddingTop: TOPBAR_HEIGHT / 3 }}>{carouselItems[index].title}</Text>
+                        </LinearGradient>
+                    </>
                 )}
             />
-        </View>
-        <SplitView wallpapers={wallpapers} />
+        </Animated.View>
+
+        <SplitView onScroll={(yOffset) => {
+            setScrollY(yOffset)
+        }} wallpapers={wallpapers} />
+
         {selectedWallpaper && <DownloadPicture onClose={() => setSelectedWallpaper(null)} wallpaper={selectedWallpaper} />}
+
     </SafeAreaView>
 }
 
