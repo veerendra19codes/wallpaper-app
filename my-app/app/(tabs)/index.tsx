@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import { ThemedText } from "@/components/ThemedText";
 import { AnimatedView } from "react-native-reanimated/lib/typescript/reanimated2/component/View";
 import Animated from "react-native-reanimated";
+import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 
 const TOPBAR_HEIGHT = 250;
 
@@ -21,7 +22,7 @@ export default function Explore() {
     const [yOffset, setScrollY] = useState(0);
     const carouselItems = useCarousel();
 
-    return <SafeAreaView style={{ flex: 1 }}>
+    return <ThemedSafeAreaView style={{ flex: 1 }}>
         <Animated.View style={{ height: TOPBAR_HEIGHT - yOffset }}>
             <Carousel
                 loop
@@ -56,7 +57,7 @@ export default function Explore() {
 
         {selectedWallpaper && <DownloadPicture onClose={() => setSelectedWallpaper(null)} wallpaper={selectedWallpaper} />}
 
-    </SafeAreaView>
+    </ThemedSafeAreaView>
 }
 
 const styles = StyleSheet.create({

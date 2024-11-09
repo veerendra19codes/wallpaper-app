@@ -12,7 +12,7 @@ export default function Foryou() {
     const theme = useColorScheme() ?? "light";
 
     return (
-        <SafeAreaView style={styles.container}>
+        <ThemedSafeAreaView style={styles.container}>
             <Tab.Navigator style={{
                 flex: 1
             }} screenOptions={{
@@ -29,7 +29,7 @@ export default function Foryou() {
                 <Tab.Screen name="liked" component={LikedScreen} />
                 <Tab.Screen name="library" component={LibraryScreen} />
             </Tab.Navigator>
-        </SafeAreaView>
+        </ThemedSafeAreaView>
     );
 }
 

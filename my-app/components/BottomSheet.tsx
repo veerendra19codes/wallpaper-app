@@ -7,6 +7,8 @@ import { ThemedText } from './ThemedText';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Colors } from '@/constants/Colors';
+import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from "expo-media-library";
 
 const theme = useColorScheme() ?? 'light';
 
@@ -69,7 +71,7 @@ export const DownloadPicture = ({ onClose, wallpaper }: {
                     </ThemedView>
 
                     {/* <ThemedView style={styles.downloadButtonContainer}> */}
-                    <DownloadButton />
+                    <DownloadButton url={wallpaper.url} />
                 </ThemedView>
             </BottomSheetView>
 
@@ -78,10 +80,28 @@ export const DownloadPicture = ({ onClose, wallpaper }: {
     );
 };
 
-function DownloadButton() {
+function DownloadButton({ url }: { url: string }) {
     const theme = useColorScheme() ?? 'light';
 
-    return <Pressable>
+    return <Pressable onPress={async () => {
+        let date = new Date().getTime();
+        let fileUri = FileSystem.documentDirectory + `${date}.jpg`;
+
+        try {
+            await FileSystem.downloadAsync(url, fileUri)
+            const response = await MediaLibrary.requestPermissionsAsync(true);
+            if (response.granted) {
+                MediaLibrary.createAssetAsync(fileUri)
+                alert("Photo Downloaded successfully")
+            }
+            else {
+                console.error("permission not granted")
+            }
+        }
+        catch (err) {
+            console.log("FS err: ", err);
+        }
+    }}>
         <ThemedView style={styles.downloadButton} >
             <Ionicons
                 name={'download'}

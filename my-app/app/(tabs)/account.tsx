@@ -1,3 +1,4 @@
+import { ThemedSafeAreaView } from "@/components/ThemedSafeAreaView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
@@ -13,9 +14,9 @@ const theme = useColorScheme() ?? 'light';
 export default function Account() {
     const theme = useColorScheme() ?? 'light';
 
-    return <SafeAreaView style={{ flex: 1 }}>
+    return <ThemedSafeAreaView style={{ flex: 1 }}>
         <ThemedView style={{ flex: 1, flexDirection: "column", gap: 20 }}>
-            <ThemedView>
+            <ThemedView style={{ paddingTop: 20 }}>
                 <HeaderText text="Panel" />
                 <SubHeaderText text="Sign in to save your data" />
             </ThemedView>
@@ -30,8 +31,30 @@ export default function Account() {
                 </ThemedView>
             </ThemedView>
 
+            <About />
         </ThemedView>
-    </SafeAreaView>
+
+    </ThemedSafeAreaView>
+}
+
+function About() {
+    return <ThemedView
+        style={{ flexDirection: "column", margin: "auto", justifyContent: "center", alignItems: "center" }}
+    >
+        <HeaderText text="About" />
+        <ThemedView style={{ marginTop: 10 }} >
+            <Pressable>
+                <ThemedText style={{ margin: 10, fontSize: 18, alignSelf: "center" }}>Account</ThemedText>
+            </Pressable>
+            <Pressable>
+                <ThemedText style={{ margin: 10, fontSize: 18, alignSelf: "center" }}>Privacy Policy</ThemedText>
+            </Pressable><Pressable>
+                <ThemedText style={{ margin: 10, fontSize: 18, alignSelf: "center" }}>Terms of Service</ThemedText>
+            </Pressable><Pressable>
+                <ThemedText style={{ margin: 10, fontSize: 18, alignSelf: "center" }}>Licenses</ThemedText>
+            </Pressable>
+        </ThemedView>
+    </ThemedView>
 }
 
 function ThemeButton({ label, colorScheme }: {
@@ -45,7 +68,7 @@ function ThemeButton({ label, colorScheme }: {
 }
 
 function HeaderText({ text }: { text: string }) {
-    return <ThemedText style={{ width: "100%", display: "flex", textAlign: "center", fontWeight: "500", fontSize: 30, height: 80, textAlignVertical: "center" }}>
+    return <ThemedText style={{ width: "100%", display: "flex", textAlign: "center", fontWeight: "500", fontSize: 30, height: 40, textAlignVertical: "center" }}>
         {text}
     </ThemedText>
 }
